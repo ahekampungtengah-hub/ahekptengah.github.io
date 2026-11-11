@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les AHE Kampung Tengah - Progress Belajar Siswa</title>
+    <!-- Google Fonts & FontAwesome for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-baby-blue: #f0f9ff;
+            --card-bg: #ffffff;
+            --primary-blue: #0284c7;
+            --primary-hover: #0369a1;
+            --accent-blue: #38bdf8;
+            --light-blue-bg: #e0f2fe;
+            --border-color: #bae6fd;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --grid-line: rgba(186, 230, 253, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-baby-blue);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-image: 
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            background: var(--light-blue-bg);
+            color: var(--primary-blue);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-blue-bg);
+            color: var(--primary-hover);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .view-section {
+            display: none;
+        }
+        .view-section.active {
+            display: block;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 450px;
+            margin: 4rem auto;
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: var(--bg-baby-blue);
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        .dashboard-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.05);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .welcome-box h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .welcome-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .filter-dropdown-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-baby-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-dropdown-container label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            white-space: nowrap;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.05);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .badge-a { background: #dcfce7; color: #166534; }
+        .badge-b { background: #e0f2fe; color: #0369a1; }
+        .badge-c { background: #fef9c3; color: #854d0e; }
+        .badge-k { background: #fee2e2; color: #991b1b; }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        .notes-box {
+            background: var(--bg-baby-blue);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .table-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--light-blue-bg);
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(240, 249, 255, 0.5);
+        }
+
+        .status-paid {
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-unpaid {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: var(--light-blue-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-size: 2rem;
+        }
+
+        .gallery-caption {
+            padding: 1rem;
+        }
+
+        .gallery-caption h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .gallery-caption p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .flex-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .flex-row {
+                grid-template-columns: 1fr;
+            }
+            header {
+                padding: 1rem;
+            }
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Les AHE Kampung Tengah</h1>
+                <p>Progress Belajar & SPP Siswa</p>
+            </div>
+        </div>
+        <div class="nav-actions" id="navActions">
+            <button class="btn btn-outline" onclick="openAdminLoginModal()">
+                <i class="fa-solid fa-lock"></i> Login Admin
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- VIEW 1: STUDENT LOGIN -->
+        <section id="studentLoginView" class="view-section active">
+            <div class="login-card">
+                <h2>Halo, Sobat AHE! 👋</h2>
+                <p>Masukkan nama panggilan kamu yang terdaftar untuk melihat perkembangan belajar bulanan.</p>
+                <form id="studentLoginForm" onsubmit="handleStudentLogin(event)">
+                    <div class="form-group">
+                        <label for="studentNickname">Nama Panggilan Siswa</label>
+                        <input type="text" id="studentNickname" class="form-control" placeholder="Contoh: Budi, Sinta, Zaki..." required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; justify-content: center; padding: 0.85rem;">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk Dashboard
+                    </button>
+                </form>
+                <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+                    Admin Les AHE? <a href="#" onclick="openAdminLoginModal()" style="color: var(--primary-blue); font-weight: 600; text-decoration: none;">Masuk di sini</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: STUDENT DASHBOARD -->
+        <section id="studentDashboardView" class="view-section">
+            <div class="dashboard-header">
+                <div class="welcome-box">
+                    <h2 id="greetingTitle">Halo, Siswa! ✨</h2>
+                    <p>Berikut adalah laporan perkembangan belajar dan info SPP bulan ini.</p>
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <!-- Dropdown Pilih Bulan-Tahun untuk Siswa -->
+                    <div class="filter-dropdown-container">
+                        <label for="studentMonthFilter"><i class="fa-solid fa-calendar-days"></i> Periode:</label>
+                        <select id="studentMonthFilter" class="form-control" style="padding: 0.4rem 0.75rem; font-size: 0.85rem;" onchange="onStudentMonthChange(this.value)">
+                            <!-- Diisi via JS -->
+                        </select>
+                    </div>
+                    <button class="btn btn-outline" onclick="logoutStudent()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs untuk Siswa -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchStudentTab('progressTab', this)"><i class="fa-solid fa-chart-line"></i> Perkembangan Belajar</button>
+                <button class="tab-btn" onclick="switchStudentTab('sppTab', this)"><i class="fa-solid fa-book"></i> Data SPP Bulanan</button>
+                <button class="tab-btn" onclick="switchStudentTab('galleryTab', this)"><i class="fa-solid fa-images"></i> Galeri Kegiatan</button>
+            </div>
+
+            <!-- Tab 1: Progress -->
+            <div id="progressTab" class="tab-content active">
+                <div class="grid-cards">
+                    <!-- Kartu Informasi Utama -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-id-card"></i> Detail Siswa</h3>
+                            <span id="studentLevelBadge" class="badge badge-a">Level 1</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Nama Panggilan</span>
+                            <span class="info-value" id="sProfileName">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Pengajar</span>
+                            <span class="info-value" id="sProfileTeacher">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Program</span>
+                            <span class="info-value" id="sProfileProgram">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Periode Bulan</span>
+                            <span class="info-value" id="sProfileMonth">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Kartu Kategori & Perkembangan -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-star"></i> Kategori Perkembangan</h3>
+                            <span id="sCategoryBadge" class="badge badge-a">A: Sangat Baik</span>
+                        </div>
+                        <div style="margin-bottom: 0.75rem;">
+                            <span class="info-label" style="display:block; margin-bottom:0.25rem;">Perkembangan Bulan Ini:</span>
+                            <p id="sProgressText" style="font-size: 0.9rem; font-weight: 500;">-</p>
+                        </div>
+                        <div>
+                            <span class="info-label" style="display:block; margin-bottom:0.25rem;">Kendala yang Dihadapi:</span>
+                            <p id="sObstacleText" style="font-size: 0.9rem; color: var(--danger);">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-cards">
+                    <!-- Solusi & Catatan -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-lightbulb"></i> Solusi Pengajar</h3>
+                        </div>
+                        <div class="notes-box" id="sSolutionText">-</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-note-sticky"></i> Catatan Khusus untuk Siswa</h3>
+                        </div>
+                        <div class="notes-box" style="background: #fdf4ff; border-color: #f5d0fe;" id="sNotesText">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: SPP (Ikon Buku) -->
+            <div id="sppTab" class="tab-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bulan Pembayaran</th>
+                                <th>Nominal SPP</th>
+                                <th>Status</th>
+                                <th>Tanggal Bayar / Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentSppTableBody">
+                            <!-- Diisi via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 3: Galeri -->
+            <div id="galleryTab" class="tab-content">
+                <div class="gallery-grid" id="studentGalleryGrid">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: ADMIN DASHBOARD -->
+        <section id="adminDashboardView" class="view-section">
+            <div class="dashboard-header">
+                <div class="welcome-box">
+                    <h2>Panel Admin Les AHE ⚙️</h2>
+                    <p>Kelola data siswa, pengajar, progress bulanan, SPP, arsip, dan galeri real-time.</p>
+                </div>
+                <div>
+                    <button class="btn btn-danger" onclick="logoutAdmin()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar Admin
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchAdminTab('adminStudentsTab', this)"><i class="fa-solid fa-users"></i> Riwayat & Progress Siswa</button>
+                <button class="tab-btn" onclick="switchAdminTab('adminSppTab', this)"><i class="fa-solid fa-book"></i> Pembayaran SPP</button>
+                <button class="tab-btn" onclick="switchAdminTab('adminArchiveTab', this)"><i class="fa-solid fa-box-archive"></i> Arsip Progress</button>
+                <button class="tab-btn" onclick="switchAdminTab('adminGalleryTab', this)"><i class="fa-solid fa-images"></i> Kelola Galeri</button>
+                <button class="tab-btn" onclick="switchAdminTab('adminSettingsTab', this)"><i class="fa-solid fa-gear"></i> Pengaturan & Master Guru</button>
+            </div>
+
+            <!-- Tab 1 Admin: Siswa & Progress -->
+            <div id="adminStudentsTab" class="tab-content active">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Data Laporan Bulanan (Semua Periode)</h3>
+                    <button class="btn" onclick="openStudentModal()"><i class="fa-solid fa-plus"></i> Tambah / Edit Progress Bulan Baru</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Siswa</th>
+                                <th>Periode Bulan</th>
+                                <th>Pengajar</th>
+                                <th>Program & Level</th>
+                                <th>Kategori</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminStudentsTableBody">
+                            <!-- Diisi via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 2 Admin: SPP -->
+            <div id="adminSppTab" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700;"><i class="fa-solid fa-book"></i> Catatan Pembayaran SPP Siswa</h3>
+                    <button class="btn" onclick="openSppModal()"><i class="fa-solid fa-plus"></i> Catat Pembayaran Baru</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Siswa</th>
+                                <th>Bulan</th>
+                                <th>Nominal</th>
+                                <th>Status</th>
+                                <th>Keterangan / Tgl Bayar</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminSppTableBody">
+                            <!-- Diisi via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 3 Admin: Arsip Progress -->
+            <div id="adminArchiveTab" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700;"><i class="fa-solid fa-box-archive"></i> Arsip Progress Bulanan Siswa</h3>
+                    <button class="btn" onclick="exportDataExcel()"><i class="fa-solid fa-file-arrow-down"></i> Ekspor Arsip ke Excel (CSV)</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Periode Arsip</th>
+                                <th>Nama Siswa</th>
+                                <th>Pengajar</th>
+                                <th>Level</th>
+                                <th>Kategori</th>
+                                <th>Ringkasan Perkembangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminArchiveTableBody">
+                            <!-- Diisi via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 4 Admin: Galeri -->
+            <div id="adminGalleryTab" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700;">Kelola Galeri Kegiatan</h3>
+                    <button class="btn" onclick="openGalleryModal()"><i class="fa-solid fa-plus"></i> Tambah Foto Galeri</button>
+                </div>
+                <div class="gallery-grid" id="adminGalleryGrid">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+
+            <!-- Tab 5 Admin: Settings & Pengajar -->
+            <div id="adminSettingsTab" class="tab-content">
+                <div class="card" style="max-width: 600px;">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-chalkboard-user"></i> Daftar Pengajar Les AHE Kampung Tengah</h3>
+                    </div>
+                    <form onsubmit="addTeacher(event)" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="text" id="newTeacherName" class="form-control" placeholder="Nama Pengajar Baru (cth: Ms. Sarah)" required>
+                        <button type="submit" class="btn">Tambah</button>
+                    </form>
+                    <div id="teacherListContainer" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <!-- Diisi via JS -->
+                    </div>
+                </div>
+
+                <div class="card" style="max-width: 600px; margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-file-excel"></i> Sinkronisasi Data Real-Time Excel / LocalStorage</h3>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Data tersimpan secara real-time di browser (LocalStorage). Anda dapat melakukan ekspor data atau mereset data kapan saja.
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-outline" onclick="exportDataExcel()"><i class="fa-solid fa-file-arrow-down"></i> Ekspor Semua Data (CSV)</button>
+                        <button class="btn btn-danger" onclick="resetAllData()"><i class="fa-solid fa-rotate-right"></i> Reset Data Bawaan</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: ADMIN LOGIN -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-card" style="max-width: 400px; text-align: center;">
+            <div class="modal-header">
+                <h3>Login Admin AHE</h3>
+                <button class="close-btn" onclick="closeAdminLoginModal()">&times;</button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Masukkan password admin untuk mengakses panel pengaturan & pengeditan data.</p>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label for="adminPasswordInput">Password Admin</label>
+                    <input type="password" id="adminPasswordInput" class="form-control" placeholder="Masukkan password..." required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center;">Masuk Panel Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD/EDIT STUDENT PROGRESS (PER BULAN) -->
+    <div class="modal" id="studentModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="studentModalTitle">Tambah / Edit Progress Bulanan Siswa</h3>
+                <button class="close-btn" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <form onsubmit="saveStudentData(event)">
+                <input type="hidden" id="editRecordId">
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>Nama Panggilan Siswa</label>
+                        <input type="text" id="mNickName" class="form-control" placeholder="Cth: Zaki" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Periode Bulan-Tahun</label>
+                        <input type="text" id="mMonth" class="form-control" placeholder="Cth: November 2026" required>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>Nama Pengajar</label>
+                        <select id="mTeacher" class="form-control" required>
+                            <!-- Diisi via JS -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Program</label>
+                        <select id="mProgram" class="form-control" required>
+                            <option value="AHE">AHE</option>
+                            <option value="ASE">ASE</option>
+                            <option value="BEE">BEE</option>
+                            <option value="MAPEL">MAPEL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>Tingkat Level / Kelas</label>
+                        <input type="text" id="mLevel" class="form-control" placeholder="Cth: Level 1 - Bulan ke-2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori Perkembangan</label>
+                        <select id="mCategory" class="form-control" required>
+                            <option value="A">A: Sangat Baik</option>
+                            <option value="B">B: Baik</option>
+                            <option value="C">C: Cukup</option>
+                            <option value="K">K: Kurang</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Perkembangan Bulan Ini</label>
+                    <textarea id="mProgress" class="form-control" rows="2" required></textarea>
+                </div>
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>Kendala</label>
+                        <textarea id="mObstacle" class="form-control" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Solusi</label>
+                        <textarea id="mSolution" class="form-control" rows="2" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Catatan untuk Siswa</label>
+                    <textarea id="mNotes" class="form-control" rows="2" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1rem;">Simpan Data Progress</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD SPP -->
+    <div class="modal" id="sppModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Catat Pembayaran SPP</h3>
+                <button class="close-btn" onclick="closeSppModal()">&times;</button>
+            </div>
+            <form onsubmit="saveSppData(event)">
+                <div class="form-group">
+                    <label>Pilih Nama Siswa</label>
+                    <select id="sppStudentName" class="form-control" required>
+                        <!-- Diisi via JS -->
+                    </select>
+                </div>
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>Bulan SPP</label>
+                        <input type="text" id="sppMonth" class="form-control" placeholder="Cth: November 2026" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nominal (Rp)</label>
+                        <input type="text" id="sppAmount" class="form-control" value="150.000" required>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label>Status Pembayaran</label>
+                        <select id="sppStatus" class="form-control" required>
+                            <option value="Lunas">Lunas</option>
+                            <option value="Belum Lunas">Belum Lunas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Keterangan / Tanggal Bayar</label>
+                        <input type="text" id="sppNote" class="form-control" placeholder="Cth: Dibayar 5 Nov 2026" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1rem;">Simpan SPP</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD GALLERY -->
+    <div class="modal" id="galleryModal">
+        <div class="modal-card" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3>Tambah Foto / Kegiatan Galeri</h3>
+                <button class="close-btn" onclick="closeGalleryModal()">&times;</button>
+            </div>
+            <form onsubmit="saveGalleryData(event)">
+                <div class="form-group">
+                    <label>Judul Kegiatan</label>
+                    <input type="text" id="gTitle" class="form-control" placeholder="Cth: Belajar Membaca Ceria" required>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi Singkat</label>
+                    <input type="text" id="gDesc" class="form-control" placeholder="Cth: Suasana kelas AHE Kampung Tengah" required>
+                </div>
+                <div class="form-group">
+                    <label>URL Gambar / Icon (Emoji/Unsplash URL)</label>
+                    <input type="text" id="gImg" class="form-control" value="📚" placeholder="Cth: 📚 atau https://..." required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 1rem;">Tambah ke Galeri</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic & Real-time State -->
+    <script>
+        const defaultTeachers = ["Ms. Hane", "Ms. EL", "Ms. Shobah", "Ms. Nabila", "Ms. Laras"];
+        
+        const defaultStudentRecords = [
+            {
+                id: "rec_1",
+                name: "Zaki",
+                month: "Oktober 2026",
+                teacher: "Ms. Hane",
+                program: "AHE",
+                level: "Level 1 - Bulan ke-1",
+                category: "A",
+                progress: "Mulai lancar mengenal huruf alfabet dan suku kata terbuka.",
+                obstacle: "Masih perlu adaptasi dengan durasi belajar penuh.",
+                solution: "Memberikan jeda istirahat singkat dan reward stiker.",
+                notes: "Bagus sekali perkembangan awal Zaki."
+            },
+            {
+                id: "rec_2",
+                name: "Zaki",
+                month: "November 2026",
+                teacher: "Ms. Hane",
+                program: "AHE",
+                level: "Level 1 - Bulan ke-2",
+                category: "A",
+                progress: "Sangat lancar membaca suku kata terbuka dan tertutup. Pengenalan huruf konsonan sudah sangat baik.",
+                obstacle: "Terkadang masih tertukar huruf b dan d saat menulis cepat.",
+                solution: "Memberikan latihan pembeda visual secara rutin dan permainan flashcard.",
+                notes: "Pertahankan semangat belajarnya ya Zaki! Kamu hebat!"
+            },
+            {
+                id: "rec_3",
+                name: "Keisha",
+                month: "November 2026",
+                teacher: "Ms. EL",
+                program: "ASE",
+                level: "Level 2 - Bulan ke-1",
+                category: "B",
+                progress: "Kemampuan mengeja kalimat pendek sudah meningkat pesat. Antusias tinggi saat kelas.",
+                obstacle: "Kurang teliti dalam membaca tanda baca titik dan koma.",
+                solution: "Membimbing jeda pernafasan saat membaca teks panjang.",
+                notes: "Hebat Keisha, terus rajin membaca buku cerita di rumah ya!"
+            },
+            {
+                id: "rec_4",
+                name: "Farel",
+                month: "November 2026",
+                teacher: "Ms. Shobah",
+                program: "BEE",
+                level: "Level 3",
+                category: "A",
+                progress: "Sangat aktif dan lancar menguasai kosakata baru bahasa Inggris dasar.",
+                obstacle: "Pelafalan beberapa kata sulit masih perlu bimbingan.",
+                solution: "Metode bernyanyi dan mendengarkan audio pengucapan.",
+                notes: "Good job Farel! Keep up the good work."
+            }
+        ];
+
+        const defaultSpp = [
+            { studentName: "Zaki", month: "November 2026", amount: "Rp 150.000", status: "Lunas", note: "Dibayar 2 Nov 2026" },
+            { studentName: "Zaki", month: "Oktober 2026", amount: "Rp 150.000", status: "Lunas", note: "Dibayar 3 Okt 2026" },
+            { studentName: "Keisha", month: "November 2026", amount: "Rp 150.000", status: "Lunas", note: "Dibayar 4 Nov 2026" },
+            { studentName: "Farel", month: "November 2026", amount: "Rp 150.000", status: "Belum Lunas", note: "Menunggu konfirmasi" }
+        ];
+
+        const defaultGallery = [
+            { title: "Kelas Interaktif AHE", desc: "Suasana belajar membaca penuh ceria di Unit Kampung Tengah", img: "🎨" },
+            { title: "Siswa Berprestasi Bulan Ini", desc: "Penghargaan bintang kelas untuk siswa teladan", img: "⭐" },
+            { title: "Pojok Baca Buku", desc: "Koleksi buku lengkap metode AHE yang menyenangkan", img: "📖" }
+        ];
+
+        function getLocalStorage(key, defaultVal) {
+            const data = localStorage.getItem('ahe_' + key);
+            return data ? JSON.parse(data) : defaultVal;
+        }
+
+        function setLocalStorage(key, val) {
+            localStorage.setItem('ahe_' + key, JSON.stringify(val));
+        }
+
+        let teachers = getLocalStorage('teachers', defaultTeachers);
+        let studentRecords = getLocalStorage('studentRecords', defaultStudentRecords);
+        let sppData = getLocalStorage('spp', defaultSpp);
+        let gallery = getLocalStorage('gallery', defaultGallery);
+
+        let currentStudentName = null;
+        let selectedStudentMonth = null;
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        function handleStudentLogin(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('studentNickname').value.trim();
+            const records = studentRecords.filter(s => s.name.toLowerCase() === nickname.toLowerCase());
+
+            if (!records.length) {
+                alert("Nama panggilan tidak ditemukan atau belum terdaftar oleh admin! Pastikan penulisan benar.");
+                return;
+            }
+
+            currentStudentName = records[0].name;
+            selectedStudentMonth = records[records.length - 1].month;
+            
+            loadStudentDashboard();
+            switchView('studentDashboardView');
+        }
+
+        function logoutStudent() {
+            currentStudentName = null;
+            selectedStudentMonth = null;
+            document.getElementById('studentLoginForm').reset();
+            switchView('studentLoginView');
+        }
+
+        function loadStudentDashboard() {
+            if (!currentStudentName) return;
+
+            const records = studentRecords.filter(s => s.name.toLowerCase() === currentStudentName.toLowerCase());
+            
+            const dropdown = document.getElementById('studentMonthFilter');
+            dropdown.innerHTML = records.map(r => `
+                <option value="${r.month}" ${r.month === selectedStudentMonth ? 'selected' : ''}>${r.month} (${r.level})</option>
+            `).join('');
+
+            let activeRec = records.find(r => r.month === selectedStudentMonth);
+            if (!activeRec && records.length) {
+                activeRec = records[records.length - 1];
+                selectedStudentMonth = activeRec.month;
+            }
+
+            if (!activeRec) return;
+
+            document.getElementById('greetingTitle').innerText = `Halo, ${activeRec.name}! ✨`;
+            document.getElementById('sProfileName').innerText = activeRec.name;
+            document.getElementById('sProfileTeacher').innerText = activeRec.teacher;
+            document.getElementById('sProfileProgram').innerText = activeRec.program;
+            document.getElementById('sProfileMonth').innerText = activeRec.month;
+            document.getElementById('studentLevelBadge').innerText = activeRec.level;
+
+            const catBadge = document.getElementById('sCategoryBadge');
+            catBadge.innerText = getCategoryText(activeRec.category);
+            catBadge.className = `badge badge-${activeRec.category.toLowerCase()}`;
+
+            document.getElementById('sProgressText').innerText = activeRec.progress;
+            document.getElementById('sObstacleText').innerText = activeRec.obstacle;
+            document.getElementById('sSolutionText').innerText = activeRec.solution;
+            document.getElementById('sNotesText').innerText = activeRec.notes;
+
+            const sppTbody = document.getElementById('studentSppTableBody');
+            const studentSpp = sppData.filter(s => s.studentName.toLowerCase() === currentStudentName.toLowerCase());
+            sppTbody.innerHTML = studentSpp.length ? studentSpp.map(s => `
+                <tr>
+                    <td>${s.month}</td>
+                    <td>${s.amount}</td>
+                    <td><span class="${s.status === 'Lunas' ? 'status-paid' : 'status-unpaid'}">${s.status}</span></td>
+                    <td>${s.note}</td>
+                </tr>
+            `).join('') : `<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">Belum ada data pembayaran SPP.</td></tr>`;
+
+            renderStudentGallery();
+        }
+
+        function onStudentMonthChange(monthVal) {
+            selectedStudentMonth = monthVal;
+            loadStudentDashboard();
+        }
+
+        function getCategoryText(cat) {
+            switch(cat.toUpperCase()) {
+                case 'A': return 'A: Sangat Baik';
+                case 'B': return 'B: Baik';
+                case 'C': return 'C: Cukup';
+                case 'K': return 'K: Kurang';
+                default: return cat;
+            }
+        }
+
+        function switchStudentTab(tabId, btn) {
+            const parent = btn.parentElement.parentElement;
+            parent.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            parent.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function switchAdminTab(tabId, btn) {
+            const parent = btn.parentElement.parentElement;
+            parent.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            parent.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function openAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.add('open');
+        }
+        function closeAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.remove('open');
+            document.getElementById('adminPasswordInput').value = '';
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPasswordInput').value;
+            if (pass === 'anakhebat') {
+                closeAdminLoginModal();
+                loadAdminDashboard();
+                switchView('adminDashboardView');
+            } else {
+                alert("Password admin salah! Password yang benar adalah 'anakhebat'");
+            }
+        }
+
+        function logoutAdmin() {
+            switchView('studentLoginView');
+        }
+
+        function loadAdminDashboard() {
+            renderAdminStudents();
+            renderAdminSpp();
+            renderAdminArchive();
+            renderAdminGallery();
+            renderTeacherList();
+            populateTeacherDropdown();
+            populateStudentDropdownForSpp();
+        }
+
+        function renderAdminStudents() {
+            const tbody = document.getElementById('adminStudentsTableBody');
+            tbody.innerHTML = studentRecords.map((s, idx) => `
+                <tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td><span class="badge" style="background:var(--light-blue-bg); color:var(--primary-blue);">${s.month}</span></td>
+                    <td>${s.teacher}</td>
+                    <td>${s.program} - ${s.level}</td>
+                    <td><span class="badge badge-${s.category.toLowerCase()}">${s.category}</span></td>
+                    <td>
+                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="editStudentRecord(${idx})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="deleteStudentRecord(${idx})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openStudentModal(isEdit = false) {
+            populateTeacherDropdown();
+            if (!isEdit) {
+                document.getElementById('studentModalTitle').innerText = "Tambah Progress Bulan Baru";
+                document.getElementById('editRecordId').value = "";
+                document.getElementById('mNickName').value = "";
+                document.getElementById('mMonth').value = "November 2026";
+                document.getElementById('mLevel').value = "";
+                document.getElementById('mProgress').value = "";
+                document.getElementById('mObstacle').value = "";
+                document.getElementById('mSolution').value = "";
+                document.getElementById('mNotes').value = "";
+            }
+            document.getElementById('studentModal').classList.add('open');
+        }
+
+        function closeStudentModal() {
+            document.getElementById('studentModal').classList.remove('open');
+        }
+
+        function editStudentRecord(idx) {
+            const s = studentRecords[idx];
+            document.getElementById('studentModalTitle').innerText = "Edit Progress Bulanan";
+            document.getElementById('editRecordId').value = s.id || idx;
+            document.getElementById('mNickName').value = s.name;
+            document.getElementById('mMonth').value = s.month;
+            document.getElementById('mTeacher').value = s.teacher;
+            document.getElementById('mProgram').value = s.program;
+            document.getElementById('mLevel').value = s.level;
+            document.getElementById('mCategory').value = s.category;
+            document.getElementById('mProgress').value = s.progress;
+            document.getElementById('mObstacle').value = s.obstacle;
+            document.getElementById('mSolution').value = s.solution;
+            document.getElementById('mNotes').value = s.notes;
+            
+            populateTeacherDropdown();
+            document.getElementById('studentModal').classList.add('open');
+        }
+
+        function saveStudentData(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editRecordId').value;
+            const newData = {
+                id: editId ? editId : 'rec_' + Date.now(),
+                name: document.getElementById('mNickName').value.trim(),
+                month: document.getElementById('mMonth').value.trim(),
+                teacher: document.getElementById('mTeacher').value,
+                program: document.getElementById('mProgram').value,
+                level: document.getElementById('mLevel').value.trim(),
+                category: document.getElementById('mCategory').value,
+                progress: document.getElementById('mProgress').value,
+                obstacle: document.getElementById('mObstacle').value,
+                solution: document.getElementById('mSolution').value,
+                notes: document.getElementById('mNotes').value
+            };
+
+            if (editId) {
+                const idx = studentRecords.findIndex(s => (s.id && s.id === editId));
+                if (idx !== -1) {
+                    studentRecords[idx] = newData;
+                } else {
+                    studentRecords.push(newData);
+                }
+            } else {
+                studentRecords.push(newData);
+            }
+
+            setLocalStorage('studentRecords', studentRecords);
+            closeStudentModal();
+            loadAdminDashboard();
+            alert("Data progress bulanan berhasil disimpan secara real-time!");
+        }
+
+        function deleteStudentRecord(idx) {
+            if (confirm(`Yakin ingin menghapus laporan bulan ${studentRecords[idx].month} untuk siswa ${studentRecords[idx].name}?`)) {
+                studentRecords.splice(idx, 1);
+                setLocalStorage('studentRecords', studentRecords);
+                loadAdminDashboard();
+            }
+        }
+
+        function populateTeacherDropdown() {
+            const sel = document.getElementById('mTeacher');
+            sel.innerHTML = teachers.map(t => `<option value="${t}">${t}</option>`).join('');
+        }
+
+        function populateStudentDropdownForSpp() {
+            const uniqueNames = [...new Set(studentRecords.map(s => s.name))];
+            const sel = document.getElementById('sppStudentName');
+            sel.innerHTML = uniqueNames.map(name => `<option value="${name}">${name}</option>`).join('');
+        }
+
+        function renderAdminSpp() {
+            const tbody = document.getElementById('adminSppTableBody');
+            tbody.innerHTML = sppData.map((s, idx) => `
+                <tr>
+                    <td><strong>${s.studentName}</strong></td>
+                    <td>${s.month}</td>
+                    <td>${s.amount}</td>
+                    <td><span class="${s.status === 'Lunas' ? 'status-paid' : 'status-unpaid'}">${s.status}</span></td>
+                    <td>${s.note}</td>
+                    <td>
+                        <button class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="deleteSpp(${idx})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openSppModal() {
+            populateStudentDropdownForSpp();
+            document.getElementById('sppModal').classList.add('open');
+        }
+        function closeSppModal() {
+            document.getElementById('sppModal').classList.remove('open');
+        }
+
+        function saveSppData(e) {
+            e.preventDefault();
+            const newSpp = {
+                studentName: document.getElementById('sppStudentName').value,
+                month: document.getElementById('sppMonth').value,
+                amount: document.getElementById('sppAmount').value,
+                status: document.getElementById('sppStatus').value,
+                note: document.getElementById('sppNote').value
+            };
+            sppData.unshift(newSpp);
+            setLocalStorage('spp', sppData);
+            closeSppModal();
+            renderAdminSpp();
+            alert("Data pembayaran SPP berhasil disimpan!");
+        }
+
+        function deleteSpp(idx) {
+            sppData.splice(idx, 1);
+            setLocalStorage('spp', sppData);
+            renderAdminSpp();
+        }
+
+        function renderAdminArchive() {
+            const tbody = document.getElementById('adminArchiveTableBody');
+            tbody.innerHTML = studentRecords.length ? studentRecords.map(a => `
+                <tr>
+                    <td><span class="badge" style="background:var(--light-blue-bg); color:var(--primary-blue);">${a.month}</span></td>
+                    <td><strong>${a.name}</strong></td>
+                    <td>${a.teacher}</td>
+                    <td>${a.level}</td>
+                    <td><span class="badge badge-${a.category.toLowerCase()}">${a.category}</span></td>
+                    <td>${a.progress}</td>
+                </tr>
+            `).join('') : `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">Belum ada arsip tersimpan.</td></tr>`;
+        }
+
+        function renderStudentGallery() {
+            const grid = document.getElementById('studentGalleryGrid');
+            grid.innerHTML = gallery.map(g => `
+                <div class="gallery-item">
+                    <div class="gallery-img">${g.img}</div>
+                    <div class="gallery-caption">
+                        <h4>${g.title}</h4>
+                        <p>${g.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminGallery() {
+            const grid = document.getElementById('adminGalleryGrid');
+            grid.innerHTML = gallery.map((g, idx) => `
+                <div class="gallery-item">
+                    <div class="gallery-img">${g.img}</div>
+                    <div class="gallery-caption">
+                        <h4>${g.title}</h4>
+                        <p>${g.desc}</p>
+                        <button class="btn btn-danger" style="margin-top:0.5rem; width:100%; padding:0.25rem; font-size:0.75rem;" onclick="deleteGallery(${idx})"><i class="fa-solid fa-trash"></i> Hapus</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openGalleryModal() {
+            document.getElementById('galleryModal').classList.add('open');
+        }
+        function closeGalleryModal() {
+            document.getElementById('galleryModal').classList.remove('open');
+        }
+
+        function saveGalleryData(e) {
+            e.preventDefault();
+            const item = {
+                title: document.getElementById('gTitle').value,
+                desc: document.getElementById('gDesc').value,
+                img: document.getElementById('gImg').value
+            };
+            gallery.unshift(item);
+            setLocalStorage('gallery', gallery);
+            closeGalleryModal();
+            renderAdminGallery();
+            alert("Foto galeri berhasil ditambahkan!");
+        }
+
+        function deleteGallery(idx) {
+            gallery.splice(idx, 1);
+            setLocalStorage('gallery', gallery);
+            renderAdminGallery();
+        }
+
+        function renderTeacherList() {
+            const container = document.getElementById('teacherListContainer');
+            container.innerHTML = teachers.map((t, idx) => `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0.75rem; background:var(--bg-baby-blue); border-radius:8px; border:1px solid var(--border-color);">
+                    <span style="font-weight:600; font-size:0.9rem;">${t}</span>
+                    <button class="btn btn-danger" style="padding:0.2rem 0.5rem; font-size:0.75rem;" onclick="deleteTeacher(${idx})"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function addTeacher(e) {
+            e.preventDefault();
+            const name = document.getElementById('newTeacherName').value.trim();
+            if (name && !teachers.includes(name)) {
+                teachers.push(name);
+                setLocalStorage('teachers', teachers);
+                document.getElementById('newTeacherName').value = '';
+                renderTeacherList();
+                populateTeacherDropdown();
+                alert(`Pengajar ${name} berhasil ditambahkan!`);
+            }
+        }
+
+        function deleteTeacher(idx) {
+            if (teachers.length <= 1) {
+                alert("Minimal harus ada satu pengajar.");
+                return;
+            }
+            teachers.splice(idx, 1);
+            setLocalStorage('teachers', teachers);
+            renderTeacherList();
+            populateTeacherDropdown();
+        }
+
+        function exportDataExcel() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Nama,Bulan,Pengajar,Program,Level,Kategori,Perkembangan\n";
+            studentRecords.forEach(s => {
+                csvContent += `"${s.name}","${s.month}","${s.teacher}","${s.program}","${s.level}","${s.category}","${s.progress}"\n`;
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "data_progress_bulanan_ahe.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function resetAllData() {
+            if (confirm("Reset seluruh data ke pengaturan awal?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
